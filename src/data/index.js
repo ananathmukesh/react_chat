@@ -202,6 +202,7 @@ const ChatList = [
 
 const Chat_History = [
   {
+    
     type: "msg",
     message: "Hi 👋🏻, How are ya ?",
     incoming: true,

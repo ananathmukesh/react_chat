@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, Slide, Stack, Typography} from '@mui/material'
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {useTheme } from "@mui/material/styles";
 import { Bell, CaretRight, Phone, Prohibit, Star, Trash, VideoCamera, X } from 'phosphor-react';
 import { useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import { ToggleSidebar, UpdateSidebarType } from '../redux/slices/app';
 import { faker } from '@faker-js/faker';
 import AntSwitch from './AntSwitch';
 import '../css/global.css';
+import axios from 'axios';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -59,11 +60,28 @@ const DeleteDialog = ({open, handleClose}) =>{
 }
 
 const Contact = () => {
+
+
+
+
+
   const theme = useTheme();
   const dispatch = useDispatch();
 
+   const [profile, setProfile] = useState(false);
+
   const [openBlock, setOpenBlock] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+
+  const [selectedFile, setSelectedFile] = useState('');
+  const [imageSrc, setImageSrc] = useState('');
+
+  useEffect(() => {
+    console.log('Updated Image Src:', imageSrc);
+    // setImageSrc(imageSrc)
+  }, [imageSrc]);
+
+
 
   const handleCloseBlock = () =>{
     setOpenBlock(false);
@@ -73,6 +91,46 @@ const Contact = () => {
     setOpenDelete(false);
   }
 
+  const handleFileChange = async(event) => {
+    // Handle the file change event
+    const file = event.target.files[0];
+
+    // Update state with the selected file
+    setSelectedFile(file);
+
+    // Read the selected file as a data URL and update the image source
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageSrc(reader.result);
+      console.log(imageSrc);
+    };
+    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append('id', 48);
+    formData.append('image', selectedFile);
+    try {
+    
+      const res = await axios.post('http://localhost:8001/api/uploadimg',formData);
+      if(res.data){
+        if(res.data.code==200){
+        alert(res.data.data.message);
+        } else{
+          console.log(res);
+          alert(res.data.data.message);
+        }
+      }
+    } catch (err) {
+      console.log('err',err.response.data.data.message);
+      alert(err.response.data.data.message);
+    }
+    
+  };
+
+  const handleAvatarClick = () => {
+    // Trigger the file input click when the Avatar is clicked
+    document.getElementById('fileInput').click();
+  };
+  
   return (
     <Box sx={{width:320, height:'100vh'}}>
       <Stack sx={{height:'100%'}}>
@@ -96,7 +154,22 @@ const Contact = () => {
         <Stack className='scrollbar'  sx={{height:'100%', position:'relative', flexGrow:1, overflowY:'scroll'}} p={3}
         spacing={3}>
           <Stack alignItems={'center'} direction='row' spacing={2}>
-            <Avatar src={faker.image.avatar()} alt={faker.name.firstName} sx={{height:64, width:64}}/>
+           
+          <Avatar 
+            src={imageSrc || `../assets/Images/def_ava.jpg`}
+            alt={faker.name.firstName} sx={{height:64, width:64}} 
+            onClick={handleAvatarClick}
+            />
+            <input
+        type="file"
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
+        id="fileInput"
+      />
+        
+           
+
+
             <Stack spacing={0.5}>
               <Typography variant='article' fontWeight={600}>
                 {faker.name.fullName()}

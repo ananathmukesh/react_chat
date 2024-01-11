@@ -7,9 +7,11 @@ import StyledBadge from '../StyledBadge';
 import { ToggleSidebar } from '../../redux/slices/app';
 import { useDispatch } from 'react-redux';
 
-const Header = () => {
+const Header = ({ profilepic,name }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+
+  console.log(profilepic);
   return (
     <Box p={2} sx={{ width:'100%', backgroundColor: theme.palette.mode === 'light' ? '#F8FAFF' : theme.palette.background.paper, boxShadow:'0px 0px 2px rgba(0,0,0,0.25)'}}>
     <Stack alignItems={'center'} direction='row' justifyContent={'space-between'}
@@ -24,13 +26,13 @@ const Header = () => {
                     horizontal: "right",
                 }}
                 variant="dot">
-                    <Avatar alt={faker.name.fullName()} src={faker.image.avatar()}/>
+                    <Avatar alt={faker.name.fullName()} src={profilepic}/>
                 </StyledBadge>
                 
             </Box>
             <Stack spacing={0.2}>
                     <Typography variant='subtitle2'>
-                        {faker.name.fullName()}
+                        {name}
                     </Typography>
                     <Typography variant='caption'>
                         Online

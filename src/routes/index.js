@@ -37,11 +37,14 @@ export default function Router() {
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
         { path: "app", element: <GeneralApp /> },
         { path: "settings", element: <Settings /> },
+        { path: "signup", element: <Signup /> },
+        { path: "signin", element: <Signin /> },
         { path: "group", element: <GroupPage /> },
         { path: "call", element: <CallPage /> },
         { path: "profile", element: <ProfilePage /> },
         { path: "404", element: <Page404 /> },
         { path: "*", element: <Navigate to="/404" replace /> },
+        { path: "start/chat", element: <StartChat /> },
       ],
     },
     { path: "*", element: <Navigate to="/404" replace /> },
@@ -56,6 +59,9 @@ const LoginPage = Loadable(
   lazy(() => import("../pages/auth/Login")),
 );
 
+const StartChat = Loadable(
+  lazy(() => import("../components/StartChat")),
+);
 const RegisterPage = Loadable(
   lazy(() => import("../pages/auth/Register")),
 );
@@ -74,6 +80,14 @@ const GroupPage = Loadable(
 
 const Settings = Loadable(
   lazy(() => import("../pages/dashboard/Settings")),
+);
+
+const Signup = Loadable(
+  lazy(()=> import('../components/Signup/Signup')),
+);
+
+const Signin = Loadable(
+  lazy(()=> import('../components/Login/Login')),
 );
 
 const CallPage = Loadable(

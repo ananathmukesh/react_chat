@@ -8,6 +8,12 @@ import { faker } from '@faker-js/faker';
 import AntSwitch from '../../components/AntSwitch';
 import Logo from '../../assets/Images/logo.ico';
 import { useNavigate } from 'react-router-dom';
+// import  logout  from '../../redux/slices/app.js';
+import {useDispatch} from 'react-redux';
+import {toast} from "react-toastify";
+import axios from 'axios';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { serverUrl } from '../../config/ServerUrl';
 
 const getPath = (index) =>{
   switch (index) {
@@ -46,12 +52,18 @@ const getMenuPath = (index) =>{
 }
 
 const SideBar = () => {
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    navigate();
+    console.log(event);
+    if(event=== 'Logout'){
+      window.localStorage.removeItem('auth');
+      navigate('/signin');
+    }
+
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -63,6 +75,32 @@ const SideBar = () => {
     const [selected, setSelected] = useState(0); // by default 0 index button is selected
     //switch themes
     const {onToggleMode} = useSettings();
+
+
+ const handleLogout = async(event) => {
+    event.preventDefault();
+    try {
+      const res = await axios.get('http://localhost:8001/api/logout');
+      console.log(res.data.data.message);
+      if(res.data){
+        if(res.data.code==200){
+          window.localStorage.removeItem('auth');
+          // dispatch(logout());
+          navigate('/signin');
+         toast.success(res.data.data.message);
+        } else{
+          console.log(res);
+          toast.error(res.data.data.message);
+        }
+      }
+
+    } catch (err) {
+      console.log('err',err);
+      toast.error('Failed. '+err.response.data.data.message);
+    }
+   }
+
+
   return (
     <Box p={2} sx={{ backgroundColor: theme.palette.background.paper, 
         boxShadow: "0px 0px 2px rgba(0,0,0,0.25)", height: "100vh", width: 100, display:"flex" }}>
@@ -105,7 +143,13 @@ const SideBar = () => {
                 <Gear />
               </IconButton>
             }
-
+            <Divider sx={{ width: "48px" }} />
+            <IconButton  sx={{ width: "max-content",
+               color: theme.palette.mode === 'light' ? "#000" :theme.palette.text.primary }}
+               onClick={handleLogout}
+                >
+                <LogoutIcon />
+              </IconButton>
           </Stack>
 
           </Stack>
@@ -133,7 +177,7 @@ const SideBar = () => {
             >
             <Stack spacing={1} px={1}>
               {Profile_Menu.map((el, idx)=>(
-                  <MenuItem onClick={ ()=> {handleClick(); } }>
+                  <MenuItem onClick={ ()=> {handleClick(el.title); } }>
                     <Stack onClick={()=>{
                       navigate(getMenuPath(idx))
                     }} sx={{width:100}} direction='row' alignItems={'center'}
