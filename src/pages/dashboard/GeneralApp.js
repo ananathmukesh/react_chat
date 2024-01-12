@@ -420,7 +420,7 @@ const GeneralApp = () => {
       }
  
  
-       const res = await axios.post(`${chatserverUrl}/chat/msgconversation`, formData);
+       const res = await axios.post(`${livenodeUrl}/chat/msgconversation`, formData);
        console.log(res.data.data.sendAfterConversation);
        if(res.data){
          if(res.data.code==200){
