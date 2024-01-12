@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ThemeProvider from './theme';
 // components
 import ThemeSettings from './components/settings';
+import i18n from "./i18n";
 
 function App() {
   return (
