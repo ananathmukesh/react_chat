@@ -20,7 +20,7 @@ import Message from "../../components/Conversation/Message";
 import YourComponentFotter from "../../components/Conversation/Footer";
 import { LinkSimple, PaperPlaneTilt, Smiley, Camera, File, Image, Sticker, User,Microphone } from 'phosphor-react';
 import Picker from '@emoji-mart/react'
-import { chatserverUrl } from "../../config/ServerUrl";
+import { chatserverUrl,livenodeUrl } from "../../config/ServerUrl";
 import { useNavigate } from "react-router-dom";
 import StartChat from "../../components/StartChat";
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -181,7 +181,7 @@ const GeneralApp = () => {
           receiverId:clickedChatId
          }
 
-        const response = await axios.post('http://localhost:8001/api/messages', chathistoryids);
+        const response = await axios.post(`${livenodeUrl}/api/messages`, chathistoryids);
         console.log(response);
         setChathistory(response.data.data.history);
       } catch (error) {
@@ -208,7 +208,7 @@ const GeneralApp = () => {
           id: authData.user.id
         }
 
-        const response = await axios.post('http://localhost:8001/api/chatlist', listdetails);
+        const response = await axios.post(`${livenodeUrl}/api/chatlist`, listdetails);
         setData(response.data.data.chatlist);
         console.log(response.data.data.chatlist);
       } catch (error) {
@@ -224,7 +224,7 @@ const GeneralApp = () => {
             user_id:userid,
             receiver_id:clickedChatId
           };
-          const res = await axios.post(`http://localhost:8001/chat/getchatmasterid`,user_ids)
+          const res = await axios.post(`${livenodeUrl}/chat/getchatmasterid`,user_ids)
           console.log('chatmaster id',res.data,'user id',userid);
           setChatmasterid(res.data.data.chatmaster_id[0].chatmaster_id);
         if(res.data){
@@ -256,7 +256,7 @@ const GeneralApp = () => {
         sender_id:s_id
        }
 
-      const response = await axios.post('http://localhost:8001/api/messages', chathistoryids);
+      const response = await axios.post(`${livenodeUrl}/api/messages`, chathistoryids);
       console.log(response);
       setChathistory(response.data.data.history);
     } catch (error) {
@@ -278,7 +278,7 @@ const GeneralApp = () => {
           user_id:userids,
           receiver_id:clickedChatIds
         };
-        const res = await axios.post(`http://localhost:8001/chat/getchatmasterid`,user_ids)
+        const res = await axios.post(`${livenodeUrl}/chat/getchatmasterid`,user_ids)
         console.log('chatmaster id',res.data,'user id',userid,'onchange fectch master id :::', res.data.data.chatmaster_id,'empty',res.data.data.chatmaster_id[0].chatmaster_id.length);
       if(res.data){
         if(res.data.code==200){
@@ -306,7 +306,7 @@ const GeneralApp = () => {
         sender_id:s_id
        }
 
-      const response = await axios.post('http://localhost:8001/api/messages', chathistoryids);
+      const response = await axios.post(`${livenodeUrl}/api/messages`, chathistoryids);
       console.log(response);
       setChathistory(response.data.data.history);
     } catch (error) {
@@ -321,7 +321,7 @@ const GeneralApp = () => {
         user_id:userid,
         receiver_id:clickedChatId
       };
-      const res = await axios.post(`http://localhost:8001/chat/joinchatmaster`,user_ids)
+      const res = await axios.post(`${livenodeUrl}/chat/joinchatmaster`,user_ids)
       console.log('join chat chatmaster ',res.data.data.chatmaster_id);
       
     if(res.data){

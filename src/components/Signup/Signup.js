@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import {toast} from "react-toastify";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {useDispatch} from 'react-redux';
+import { livenodeUrl } from "../../config/ServerUrl";
 
 
 function MadeWithLove() {
@@ -84,7 +85,7 @@ export default function SignUp() {
       setLoading(true);
     try {
 
-      const res = await axios.post('http://localhost:8001/api/signup', formData);
+      const res = await axios.post(`${livenodeUrl}/api/signup`, formData);
       console.log(res);
       if(res.data){
         if(res.data.code==200){

@@ -18,23 +18,7 @@ useEffect(() => {
       setUsername(authData.user.id);
     }
 
-    // const fetchSenderReceiverMsg = async () => {
-    //   try {
-    //     const chathistoryids = {
-    //       senderId:"52",
-    //       receiverId:"48"
-    //      }
-
-    //     const response = await axios.post('http://localhost:8001/api/messages', chathistoryids);
-    //     console.log(response);
-    //     setChathistory(response.data.data.history);
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // };
-
-    // fetchSenderReceiverMsg();
-
+    
 
 
 

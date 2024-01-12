@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import {toast} from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { livenodeUrl } from '../../config/ServerUrl';
 
 
 
@@ -49,7 +50,7 @@ const OTPVerification = () => {
     event.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:8001/api/otpverify',otp_no);
+      const res = await axios.post(`${livenodeUrl}/api/otpverify`,otp_no);
       console.log(res);
       if(res.data){
         if(res.data.code==200){

@@ -14,6 +14,7 @@ import {toast} from "react-toastify";
 import axios from 'axios';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { serverUrl } from '../../config/ServerUrl';
+import { livenodeUrl } from '../../config/ServerUrl';
 
 const getPath = (index) =>{
   switch (index) {
@@ -80,7 +81,7 @@ const SideBar = () => {
  const handleLogout = async(event) => {
     event.preventDefault();
     try {
-      const res = await axios.get('http://localhost:8001/api/logout');
+      const res = await axios.get(`${livenodeUrl}/api/logout`);
       console.log(res.data.data.message);
       if(res.data){
         if(res.data.code==200){

@@ -20,6 +20,7 @@ import { ToggleSidebar, UpdateSidebarType } from '../../redux/slices/app';
 import { LoggedUser } from "../../redux/slices/app";
 import ToggleSidebar1 from '../../redux/slices/app';
 import {useDispatch} from 'react-redux';
+import { livenodeUrl } from "../../config/ServerUrl";
 
 
 
@@ -84,7 +85,7 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:8001/api/signin',data);
+      const res = await axios.post(`${livenodeUrl}/api/signin`,data);
       console.log(res.data.data.message);
       if(res.data){
         if(res.data.code==200){

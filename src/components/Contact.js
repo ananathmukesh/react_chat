@@ -8,6 +8,7 @@ import { faker } from '@faker-js/faker';
 import AntSwitch from './AntSwitch';
 import '../css/global.css';
 import axios from 'axios';
+import { livenodeUrl } from '../config/ServerUrl';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -110,7 +111,7 @@ const Contact = () => {
     formData.append('image', selectedFile);
     try {
     
-      const res = await axios.post('http://localhost:8001/api/uploadimg',formData);
+      const res = await axios.post(`${livenodeUrl}/api/uploadimg`,formData);
       if(res.data){
         if(res.data.code==200){
         alert(res.data.data.message);
