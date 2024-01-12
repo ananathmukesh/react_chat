@@ -513,7 +513,7 @@ const GeneralApp = () => {
     </Box>
 
 
-      <Box sx={{ height: '100%', width: sidebar.open ? 'calc(100vw - 740px)': 'calc(100vw - 420px)',
+      <Box sx={{ height: '100%', width: '100%',
        backgroundColor: theme.palette.mode === 'light' ? '#F0F4FA' : theme.palette.background.default }}>
       {/* Conversation */}
       {/* <Conversation/> */}
@@ -668,22 +668,7 @@ joinchatmaster === 1 ? (
 
 
       </Box>
-      {/* Contact */}
-      {sidebar.open && (()=>{
-        switch (sidebar.type) {
-          case 'CONTACT':
-            return <Contact/>
-
-          case 'STARRED':
-            return <StarredMessages/>
-
-          case 'SHARED':
-            return <SharedMessages/>
-        
-          default:
-            break;
-        }
-      })()  }
+    
      
     </Stack>
   );
